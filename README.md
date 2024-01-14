@@ -4,6 +4,8 @@ A simple addon for Godot 4 that automatically sets the correct material on any a
 
 [![Automatic Imphenzia PixPal Import Material Setup in Godot 4](https://img.youtube.com/vi/A3XWTFI1Eik/0.jpg)](https://youtu.be/A3XWTFI1Eik)
 
+This project includes Imphenzia's [PixPal Palette Texture v1.1](https://imphenzia.com/assets)
+
 ## Usage
 
 * Copy *pixpal_tools* to your *addons* folder
