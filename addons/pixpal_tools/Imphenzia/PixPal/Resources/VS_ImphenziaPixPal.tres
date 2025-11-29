@@ -1,8 +1,4 @@
-[gd_resource type="VisualShader" load_steps=17 format=3 uid="uid://dxoncufpd7fij"]
-
-[ext_resource type="Texture2D" uid="uid://bln4kaydk2cal" path="res://Imphenzia/PixPal/Textures/ImphenziaPixPal_Emission.png" id="1_a0yjt"]
-[ext_resource type="Texture2D" uid="uid://c78hml4g8ipgy" path="res://Imphenzia/PixPal/Textures/ImphenziaPixPal_BaseColor.png" id="2_k4gmu"]
-[ext_resource type="Texture2D" uid="uid://dhp5rmw7s2vcm" path="res://Imphenzia/PixPal/Textures/ImphenziaPixPal_Attributes.png" id="3_8oko3"]
+[gd_resource type="VisualShader" load_steps=18 format=3 uid="uid://dxoncufpd7fij"]
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_frlxv"]
 default_input_values = [0, Vector2(0, 0)]
@@ -14,13 +10,19 @@ op_type = 0
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_jsxmh"]
 function = 31
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wrsv3"]
+load_path = "res://.godot/imported/ImphenziaPixPal_Emission.png-a648263194541cf3031201037985ec55.ctex"
+
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_l3ee6"]
-texture = ExtResource("1_a0yjt")
-texture_type = 1
+texture = SubResource("CompressedTexture2D_wrsv3")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y7vbs"]
+load_path = "res://.godot/imported/ImphenziaPixPal_BaseColor.png-12a001e2f54ae9d283099d88e05178ac.ctex"
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_khv4d"]
-texture = ExtResource("2_k4gmu")
-texture_type = 1
+output_port_for_preview = 0
+source = 5
+texture = SubResource("CompressedTexture2D_y7vbs")
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_op67b"]
 constant = 0.141
@@ -28,14 +30,23 @@ constant = 0.141
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_d7bfu"]
 constant = 0.03
 
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_wrsv3"]
+parameter_name = "Texture2DParameter"
+texture_type = 1
+color_default = 1
+texture_filter = 1
+
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_vpdvu"]
 input_name = "time"
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_tv6f8"]
 operator = 2
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sjrrk"]
+load_path = "res://.godot/imported/ImphenziaPixPal_Attributes.png-72794d68bca839a489bba246040d50a1.ctex"
+
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_t22by"]
-texture = ExtResource("3_8oko3")
+texture = SubResource("CompressedTexture2D_sjrrk")
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_b4oq5"]
 default_input_values = [0, Quaternion(0, 0, 0, 0)]
@@ -52,8 +63,8 @@ code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform sampler2D tex_frg_6;
-uniform sampler2D tex_frg_14 : source_color;
-uniform sampler2D tex_frg_13 : source_color;
+uniform sampler2D Texture2DParameter : source_color, hint_default_black, filter_nearest;
+uniform sampler2D tex_frg_13;
 
 
 
@@ -94,8 +105,9 @@ void fragment() {
 	vec2 n_out11p0 = vec2(n_out10p0, n_out8p0);
 
 
+	vec4 n_out14p0;
 // Texture2D:14
-	vec4 n_out14p0 = texture(tex_frg_14, n_out11p0);
+	n_out14p0 = texture(Texture2DParameter, n_out11p0);
 
 
 // FloatFunc:12
@@ -125,7 +137,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-318.78, -203.742)
+graph_offset = Vector2(-195.547, -499.077)
 nodes/fragment/0/position = Vector2(1380, -380)
 nodes/fragment/3/node = SubResource("VisualShaderNodeInput_vpdvu")
 nodes/fragment/3/position = Vector2(-2200, 1000)
@@ -153,4 +165,6 @@ nodes/fragment/15/node = SubResource("VisualShaderNodeFloatConstant_op67b")
 nodes/fragment/15/position = Vector2(700, -120)
 nodes/fragment/16/node = SubResource("VisualShaderNodeFloatConstant_d7bfu")
 nodes/fragment/16/position = Vector2(840, 520)
-nodes/fragment/connections = PackedInt32Array(3, 0, 4, 0, 6, 0, 7, 0, 7, 2, 4, 1, 9, 0, 10, 0, 10, 1, 8, 0, 4, 0, 8, 1, 10, 0, 11, 0, 8, 0, 11, 1, 7, 0, 0, 2, 7, 1, 12, 0, 11, 0, 13, 0, 12, 0, 0, 3, 13, 0, 0, 5, 14, 0, 0, 0, 11, 0, 14, 0, 15, 0, 0, 4, 16, 0, 0, 14)
+nodes/fragment/17/node = SubResource("VisualShaderNodeTexture2DParameter_wrsv3")
+nodes/fragment/17/position = Vector2(-120, -620)
+nodes/fragment/connections = PackedInt32Array(3, 0, 4, 0, 6, 0, 7, 0, 7, 2, 4, 1, 9, 0, 10, 0, 10, 1, 8, 0, 4, 0, 8, 1, 10, 0, 11, 0, 8, 0, 11, 1, 7, 0, 0, 2, 7, 1, 12, 0, 11, 0, 13, 0, 12, 0, 0, 3, 13, 0, 0, 5, 14, 0, 0, 0, 11, 0, 14, 0, 15, 0, 0, 4, 16, 0, 0, 14, 17, 0, 14, 2)
